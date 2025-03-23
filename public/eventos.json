@@ -1,0 +1,161 @@
+{
+    "eventos": [
+      {
+        "id": 1,
+        "nome": "Fórum de Inovação 2025",
+        "data_hora": "2025-04-10T09:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "TechCorp",
+          "InovaBrasil"
+        ],
+        "tema": "Inovação tecnológica no mercado empresarial",
+        "local": "Centro de Convenções de São Paulo, SP",
+        "valor_ingresso": 250.00
+      },
+      {
+        "id": 2,
+        "nome": "Congresso de Marketing Digital",
+        "data_hora": "2025-04-15T14:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "DigitalNow",
+          "MKT Solutions"
+        ],
+        "tema": "Transformação digital e estratégias de marketing",
+        "local": "Hotel Sheraton, Rio de Janeiro, RJ",
+        "valor_ingresso": 320.00
+      },
+      {
+        "id": 3,
+        "nome": "Seminário de Gestão de Projetos",
+        "data_hora": "2025-05-05T10:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "Gestão Pro",
+          "PMI Brasil"
+        ],
+        "tema": "Gestão de projetos e eficiência organizacional",
+        "local": "Expo Center Norte, São Paulo, SP",
+        "valor_ingresso": 180.00
+      },
+      {
+        "id": 4,
+        "nome": "Encontro de Liderança Feminina",
+        "data_hora": "2025-05-20T08:30:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "WomenLead",
+          "EmpowerNow"
+        ],
+        "tema": "Empoderamento feminino no mercado corporativo",
+        "local": "Windsor Barra Hotel, Rio de Janeiro, RJ",
+        "valor_ingresso": 220.00
+      },
+      {
+        "id": 5,
+        "nome": "Workshop de Sustentabilidade Corporativa",
+        "data_hora": "2025-06-10T09:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "EcoBusiness",
+          "Green Leaders"
+        ],
+        "tema": "Sustentabilidade e responsabilidade empresarial",
+        "local": "Centro de Eventos de Brasília, DF",
+        "valor_ingresso": 150.00
+      },
+      {
+        "id": 6,
+        "nome": "Fórum de Inteligência Artificial",
+        "data_hora": "2025-06-25T13:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "AI Experts",
+          "Tech Innovators"
+        ],
+        "tema": "A revolução da inteligência artificial nos negócios",
+        "local": "Centro de Convenções de Belo Horizonte, MG",
+        "valor_ingresso": 280.00
+      },
+      {
+        "id": 7,
+        "nome": "Summit de Empreendedorismo Digital",
+        "data_hora": "2025-07-15T10:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "Digital Ventures",
+          "Startup Hub"
+        ],
+        "tema": "Empreendedorismo digital e startups de sucesso",
+        "local": "Hotel Fasano, São Paulo, SP",
+        "valor_ingresso": 350.00
+      },
+      {
+        "id": 8,
+        "nome": "Expo de Negócios e Tecnologia",
+        "data_hora": "2025-08-05T09:30:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "BusinessTech",
+          "Innovation Expo"
+        ],
+        "tema": "Tecnologia e negócios no mercado global",
+        "local": "Centro de Exposições Imigrantes, São Paulo, SP",
+        "valor_ingresso": 200.00
+      },
+      {
+        "id": 9,
+        "nome": "Fórum de Economia Digital",
+        "data_hora": "2025-08-20T08:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "EconoTech",
+          "Future Economies"
+        ],
+        "tema": "Tendências e desafios da economia digital",
+        "local": "Hotel Plaza, Curitiba, PR",
+        "valor_ingresso": 270.00
+      },
+      {
+        "id": 10,
+        "nome": "Conferência de TI Corporativa",
+        "data_hora": "2025-09-10T13:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "TechCorp",
+          "IT Masters"
+        ],
+        "tema": "Transformação digital e a TI nas grandes empresas",
+        "local": "Expo Unimed, Curitiba, PR",
+        "valor_ingresso": 240.00
+      },
+      {
+        "id": 11,
+        "nome": "Simpósio de Inovação e Liderança",
+        "data_hora": "2025-09-25T09:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "Innovate Leaders",
+          "Corporate Minds"
+        ],
+        "tema": "Inovação e liderança no cenário corporativo",
+        "local": "Centro de Eventos do Ceará, Fortaleza, CE",
+        "valor_ingresso": 210.00
+      },
+      {
+        "id": 12,
+        "nome": "Workshop de Cultura Organizacional",
+        "data_hora": "2025-10-05T11:00:00",
+        "imagem": "/eventos.jpg",
+        "criadores": [
+          "OrgCulture",
+          "Cultura e Gestão"
+        ],
+        "tema": "A importância da cultura organizacional para o sucesso",
+        "local": "Hotel Unique, São Paulo, SP",
+        "valor_ingresso": 190.00
+      }
+    ]
+  }
+  

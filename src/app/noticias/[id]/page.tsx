@@ -1,43 +1,72 @@
-import { notFound } from 'next/navigation';
+import Link from "next/link";
+import NoticiaActions from "../../../components/NoticiaActions";
 
-interface Noticia {
-  id: string;
+
+type Noticia = {
+  id: number;
   titulo: string;
   noticia: string;
   conteudo: string;
+  data_publicacao: string;
   autor: string;
   imagem: string;
-  data_publicacao: string;
-}
+};
 
-async function fetchNoticiaById(id: string): Promise<Noticia | null> {
-  const res = await fetch('http://localhost:3000/noticias.json');
+async function fetchNoticia(id: number) {
+  const res = await fetch(`http://localhost:3000/noticias.json`);
   const noticias = await res.json();
-  return noticias.find((noticia: Noticia) => noticia.id === id) || null;
+  return noticias.find((noticia: Noticia) => noticia.id === id);
 }
 
-export default async function NoticiaDetalhes({ params }: { params: { id: string } }) {
-  const noticia = await fetchNoticiaById(params.id);
+function formatarDataHora(dataHora: string): string {
+  const data = new Date(dataHora);
+
+  const dia = String(data.getDate()).padStart(2, '0');
+  const meses = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ];
+  const mes = meses[data.getMonth()];
+  const ano = data.getFullYear();
+
+  const horas = String(data.getHours()).padStart(2, '0');
+  const minutos = String(data.getMinutes()).padStart(2, '0');
+
+  return `${dia} ${mes} ${ano}, ${horas}:${minutos}`;
+}
+
+export default async function NoticiaDetalhada({ params }: { params: { id: string } }) {
+  const id = parseInt(params.id, 10);
+
+  const noticia = await fetchNoticia(id);
 
   if (!noticia) {
-    notFound(); // Retorna uma página 404 se a notícia não for encontrada
+    return <p>Notícia não encontrada</p>;
   }
 
   return (
     <div className="max-w-4xl mx-auto p-4">
+      <Link href="/noticias" className="text-[#f502f6] mb-4 inline-block">
+        Voltar para a lista de eventos
+      </Link>
       <h1 className="text-center mt-5 mb-6 font-extrabold text-4xl text-gray-800">
         {noticia.titulo}
       </h1>
 
-      <img
-        src={noticia.imagem}
-        alt={noticia.titulo}
-        className="w-full h-72 object-cover rounded-lg mb-6"
-      />
-      <p className="text-gray-600 text-base">{noticia.noticia}</p>
-      <p className="text-gray-600 text-base mt-6">{noticia.conteudo}</p>
-      <p className="text-gray-600 text-base mt-6">Publicado por: {noticia.autor}</p>
-      <p className="text-gray-600 text-base mt-6">Data: {new Date(noticia.data_publicacao).toLocaleDateString()}</p>
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <img
+          src={noticia.imagem}
+          alt={noticia.titulo}
+          className="w-full h-48 object-cover rounded-lg mb-4"
+        />
+        <p className="text-gray-400 text-center m-2"> Publicado em: {formatarDataHora(noticia.data_publicacao)}</p>
+        <p className="text-gray-400 text-center m-2"> Por: {noticia.autor} </p>
+        <p className="text-gray-600 text-base">{noticia.noticia}</p>
+        <p className="text-gray-600 text-base mt-4">{noticia.conteudo}</p>
+
+        {/* Usando o componente NoticiaActions para os botões de editar e remover */}
+        <NoticiaActions id={noticia.id} />
+      </div>
     </div>
   );
 }
