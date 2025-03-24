@@ -1,30 +1,39 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';  // Usando Prisma para acessar o banco de dados, mas você pode usar qualquer banco de dados ou serviço
+import fs from 'fs';
+import path from 'path';
 
-const prisma = new PrismaClient();
+const contatoFilePath = path.join(process.cwd(), 'public', 'contato.json');
 
-export async function POST(request: Request) {
+// Função para ler o arquivo de forma assíncrona
+const readContato = (): any[] => {
+  const data = fs.readFileSync(contatoFilePath, 'utf-8');
+  return JSON.parse(data);
+};
+
+// Função para escrever no arquivo de forma assíncrona
+const writeContato = (contato: any[]): void => {
+  fs.writeFileSync(contatoFilePath, JSON.stringify(contato, null, 2));
+};
+
+// Handle POST request
+export async function POST(req: Request) {
   try {
-    const { nome, telefone, email, mensagem } = await request.json();
+    const novoContato = await req.json(); // aqui usa 'novoContato', para ficar consistente
 
-    // Validação simples
-    if (!nome || !telefone || !email || !mensagem) {
-      return NextResponse.json({ message: "Todos os campos são obrigatórios!" }, { status: 400 });
-    }
+    const contato = readContato();
 
-    // Salvar dados no banco de dados (ou outro serviço)
-    const contato = await prisma.contato.create({
-      data: {
-        nome,
-        telefone,
-        email,
-        mensagem,
-      },
-    });
+    // Gerar ID único 
+    const novoId = contato.length > 0 ? Math.max(...contato.map((n: any) => n.id)) + 1 : 1;
 
-    return NextResponse.json({ message: "Mensagem enviada com sucesso!", contato });
+    const contatoComId = { ...novoContato, id: novoId };
+
+    contato.push(contatoComId);
+
+    writeContato(contato);
+
+    return NextResponse.json(contatoComId, { status: 201 });
   } catch (error) {
-    console.error('Erro ao salvar contato:', error);
-    return NextResponse.json({ message: "Erro ao enviar a mensagem." }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ message: 'Erro ao adicionar contato' }, { status: 500 });
   }
 }
