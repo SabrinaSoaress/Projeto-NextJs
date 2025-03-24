@@ -84,7 +84,7 @@ const FormContato = () => {
 
       <button
         type="submit"
-        className="w-full bg-[#7208b4] text-white py-2 px-4 rounded-md hover:bg-[#2c039e] focus:outline-none"
+        className="w-full bg-(--roxo) text-white py-2 px-4 rounded-md hover:bg-(--azul) focus:outline-none"
       >
         Enviar
       </button>

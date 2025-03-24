@@ -1,21 +1,21 @@
-import React from 'react'
+import React from 'react';
+import Link from 'next/link';
 
 const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
       <header className="text-center mb-10">
-        <h1 className="text-5xl font-bold text-[#2c039e]">Bem-vindo à nossa Landing Page!</h1>
-        <p className="mt-4 text-xl text-gray-700">
-          Conecte-se com nossos produtos e soluções incríveis.
+        <h1 className="text-5xl font-bold text-(--azul)">Bem-vindo à Connect !</h1>
+        <p className=" text-base text-gray-500 m-9">
+        Aqui, você encontra notícias atualizadas sobre os mais diversos assuntos, além de informações sobre eventos de seu interesse e muito mais. Seja para se manter informado, acompanhar eventos locais ou descobrir novas tendências, nosso site oferece conteúdo relevante e de qualidade, sempre em tempo real. Não deixe de explorar tudo o que preparamos para você!.
         </p>
       </header>
 
       <div className="flex flex-col items-center space-y-4">
-      <button className="px-6 py-3 bg-[#7208b4] text-white text-lg rounded-md shadow-md hover:bg-[#2c039e] transition">
-          Saiba Mais
-        </button>
-          <button className="px-6 py-3 bg-transparent border-2 border-[#f502f6] text-[#f502f6] text-lg rounded-md shadow-md hover:bg-[#f502f6] hover:text-white transition">
+          <button className="px-6 py-3 bg-transparent border-2 border-(--rosa) text-(--rosa) text-lg rounded-md shadow-md hover:bg-(--rosa) hover:text-white transition">
+          <Link href={'/contato'}>
           Entre em Contato
+          </Link>
         </button>
       </div>
     </div>

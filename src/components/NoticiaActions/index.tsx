@@ -18,13 +18,13 @@ export default function NoticiaActions({ id }: { id: number }) {
     <div className="flex justify-between mt-4">
       <a
         href={`/editar-noticia/${id}`}
-        className="bg-[#2c039e] text-white px-4 py-2 rounded-md"
+        className="bg-(--azul) text-white px-4 py-2 rounded-md"
       >
         Editar
       </a>
       <button
         onClick={() => deletarNoticia(id)}
-        className="bg-[#f502f6] text-white px-4 py-2 rounded-md"
+        className="bg-(--rosa) text-white px-4 py-2 rounded-md"
       >
         Remover
       </button>

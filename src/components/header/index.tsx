@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Header() {
     return (
-        <header className="flex px-2 py-4 bg-[#7208b4] text-white">
+        <header className="flex px-9 py-4 bg-trasparent text-(--roxo)">
             <div className="flex items-center justify-between w-full mx-auto max-w-7xl">
                 <img src="iconConnect.jpg" alt="Logo" className="h-10" />
             </div>

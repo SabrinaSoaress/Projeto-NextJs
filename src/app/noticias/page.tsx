@@ -1,7 +1,8 @@
-'use client'; // Não é necessário se você não quiser usar client-side completamente, mas vou mover a busca para o cliente.
+'use client';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+
 
 interface Noticia {
   id: string;
@@ -17,7 +18,7 @@ async function fetchNoticias() {
   return noticias;
 }
 
-export default function Home() {
+export default function NoticiasPage() {
   const [noticias, setNoticias] = useState<Noticia[]>([]);
   const [pesquisa, setPesquisa] = useState('');
   const [noticiasFiltradas, setNoticiasFiltradas] = useState<Noticia[]>([]);
@@ -59,6 +60,14 @@ export default function Home() {
         />
       </div>
 
+      {/* Botão para adicionar nova notícia */}
+      <div className="flex justify-center items-center">
+        <Link href="/noticias/add" className="text-white bg-gray-300 hover:bg-(--roxo) p-2 rounded mb-6 inline-block flex justify-center">
+          Adicionar Nova Notícia
+        </Link>
+      </div>
+      
+      {/* Exibição das notícias filtradas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
         {noticiasFiltradas.length > 0 ? (
           noticiasFiltradas.map((noticia: Noticia) => (

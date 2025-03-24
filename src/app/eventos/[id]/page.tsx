@@ -1,5 +1,9 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { use } from 'react';
 
 interface Evento {
   id: number;
@@ -35,23 +39,66 @@ function formatarDataHora(dataHora: string): string {
   return `${dia} ${mes} ${ano}, ${horas}:${minutos}`;
 }
 
-export default async function EventoPage({ params }: { params: { id: string } }) {
-  const evento = await fetchEventoById(parseInt(params.id, 10));
+function calcularContagemRegressiva(dataEvento: string): string {
+  const dataAtual = new Date();
+  const dataEventoDate = new Date(dataEvento);
+  const tempoRestante = dataEventoDate.getTime() - dataAtual.getTime();
+
+  if (tempoRestante <= 0) {
+    return "O evento já aconteceu!";
+  }
+
+  const dias = Math.floor(tempoRestante / (1000 * 60 * 60 * 24));
+  const horas = Math.floor((tempoRestante % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutos = Math.floor((tempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+  const segundos = Math.floor((tempoRestante % (1000 * 60)) / 1000);
+
+  return `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+}
+
+export default function EventoPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params); // Usando o hook `use` para desestruturar `params`
+
+  const [evento, setEvento] = useState<Evento | null>(null);
+  const [contagemRegressiva, setContagemRegressiva] = useState<string>('');
+
+  useEffect(() => {
+    async function carregarEvento() {
+      const evento = await fetchEventoById(parseInt(id, 10));
+      if (!evento) {
+        notFound();
+      } else {
+        setEvento(evento);
+      }
+    }
+
+    carregarEvento();
+  }, [id]);
+
+  useEffect(() => {
+    if (evento) {
+      const intervalId = setInterval(() => {
+        setContagemRegressiva(calcularContagemRegressiva(evento.data_hora));
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [evento]);
 
   if (!evento) {
-    notFound(); // Se o evento não for encontrado, chama a função `notFound` para renderizar a página 404
+    return null; // Ou um loading spinner, se preferir
   }
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <Link href="/eventos" className="text-[#f502f6] mb-4 inline-block">
+      <h1 className="text-center text-4xl font-extrabold text-gray-800 mb-6">{evento.nome}</h1>
+
+      <Link href="/eventos" className="text-(--rosa) hover:text-(--azul) mb-4 inline-block">
         Voltar para a lista de eventos
       </Link>
 
-      <h1 className="text-center text-4xl font-extrabold text-gray-800 mb-6">{evento.nome}</h1>
-
       <img src={evento.imagem} alt={evento.nome}
-        className="w-full h-48 object-cover rounded-lg mb-4"/>
+        className="w-full h-48 object-cover rounded-lg mb-4" />
 
       <div className="mb-6">
         <p className="text-xl text-gray-800 mb-4">{evento.tema}</p>
@@ -59,6 +106,10 @@ export default async function EventoPage({ params }: { params: { id: string } })
         <p className="text-lg text-gray-700 mb-4">{formatarDataHora(evento.data_hora)}</p>
         <p className="text-lg text-gray-500 mb-4">{evento.criadores.join(', ')}</p>
         <p className="text-lg font-semibold text-gray-900">Preço do ingresso: R$ {evento.valor_ingresso.toFixed(2)}</p>
+
+        <div className="bg-white m-2 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+        <p className="text-2xl font-bold mt-6 text-center text-(--rosa)">{contagemRegressiva}</p>
+        </div>
       </div>
     </div>
   );

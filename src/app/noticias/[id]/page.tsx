@@ -46,8 +46,8 @@ export default async function NoticiaDetalhada({ params }: { params: { id: strin
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <Link href="/noticias" className="text-[#f502f6] mb-4 inline-block">
-        Voltar para a lista de eventos
+      <Link href="/noticias" className="text-(--rosa) hover:text-(--azul) mb-4 inline-block">
+        Voltar para as Notícias
       </Link>
       <h1 className="text-center mt-5 mb-6 font-extrabold text-4xl text-gray-800">
         {noticia.titulo}
