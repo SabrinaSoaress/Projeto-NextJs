@@ -18,6 +18,7 @@ const Home = () => {
           </Link>
         </button>
       </div>
+
     </div>
   )
 }

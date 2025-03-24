@@ -1,6 +1,8 @@
+'use client';
+
 import Link from "next/link";
 import NoticiaActions from "../../../components/NoticiaActions";
-
+import { useState, useEffect } from 'react'; 
 
 type Noticia = {
   id: number;
@@ -12,7 +14,7 @@ type Noticia = {
   imagem: string;
 };
 
-async function fetchNoticia(id: number) {
+async function fetchNoticia(id: number): Promise<Noticia | undefined> {
   const res = await fetch(`http://localhost:3000/noticias.json`);
   const noticias = await res.json();
   return noticias.find((noticia: Noticia) => noticia.id === id);
@@ -35,10 +37,54 @@ function formatarDataHora(dataHora: string): string {
   return `${dia} ${mes} ${ano}, ${horas}:${minutos}`;
 }
 
-export default async function NoticiaDetalhada({ params }: { params: { id: string } }) {
-  const id = parseInt(params.id, 10);
+export default function NoticiaDetalhada() {
+  const [noticia, setNoticia] = useState<Noticia | null>(null);
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState<string | null>(null);
+  const [id, setId] = useState<number | null>(null);
 
-  const noticia = await fetchNoticia(id);
+ 
+  useEffect(() => {
+    
+    const queryId = window.location.pathname.split('/').pop();
+    if (queryId) {
+      setId(Number(queryId));
+    }
+  }, []);
+
+  useEffect(() => {
+    
+    if (!id) return;
+
+    const fetchData = async () => {
+      try {
+        const noticiaData = await fetchNoticia(id);
+        if (noticiaData) {
+          setNoticia(noticiaData);
+        } else {
+          setError('Notícia não encontrada');
+        }
+      } catch (err) {
+        setError('Erro ao carregar a notícia');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]); 
+
+  if (loading) {
+    return <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+    <h1 className="text-2xl font-bold text-(--azul)">
+      Carregando...
+      </h1>
+    </div>; ;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   if (!noticia) {
     return <p>Notícia não encontrada</p>;
@@ -61,8 +107,8 @@ export default async function NoticiaDetalhada({ params }: { params: { id: strin
         />
         <p className="text-gray-400 text-center m-2"> Publicado em: {formatarDataHora(noticia.data_publicacao)}</p>
         <p className="text-gray-400 text-center m-2"> Por: {noticia.autor} </p>
-        <p className="text-gray-600 text-base">{noticia.noticia}</p>
-        <p className="text-gray-600 text-base mt-4">{noticia.conteudo}</p>
+        <p className="text-gray-600 text-base font-bold text-center">{noticia.noticia}</p>
+        <p className="text-gray-700 text-base mt-4 p-4">{noticia.conteudo}</p>
 
         {/* Usando o componente NoticiaActions para os botões de editar e remover */}
         <NoticiaActions id={noticia.id} />

@@ -18,9 +18,9 @@ export default function AddNoticia() {
             titulo,
             noticia,
             conteudo,
+            data_publicacao: new Date().toISOString(),
             autor,
             imagem,
-            data_publicacao: new Date().toISOString(),
         };
 
         try {
@@ -49,7 +49,7 @@ export default function AddNoticia() {
             </h1>
 
             <Link href="/noticias" className="text-(--rosa) hover:text-(--azul) mb-4 inline-block">
-                Voltar para a lista de eventos
+                Voltar para a lista de Notícias
             </Link>
 
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">

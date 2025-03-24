@@ -101,14 +101,15 @@ export default function EventoPage({ params }: { params: Promise<{ id: string }>
         className="w-full h-48 object-cover rounded-lg mb-4" />
 
       <div className="mb-6">
-        <p className="text-xl text-gray-800 mb-4">{evento.tema}</p>
+        <p className="text-xl text-gray-800 mb-4 text-center ">{evento.tema}</p>
+        <p className="text-lg text-gray-500 mb-4 text-center ">{evento.criadores.join(', ')}</p>
         <p className="text-lg text-gray-700 mb-4">{evento.local}</p>
         <p className="text-lg text-gray-700 mb-4">{formatarDataHora(evento.data_hora)}</p>
-        <p className="text-lg text-gray-500 mb-4">{evento.criadores.join(', ')}</p>
         <p className="text-lg font-semibold text-gray-900">Preço do ingresso: R$ {evento.valor_ingresso.toFixed(2)}</p>
 
         <div className="bg-white m-2 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <p className="text-2xl font-bold mt-6 text-center text-(--rosa)">{contagemRegressiva}</p>
+        <p className="text-sm font-bold mt-6 text-center text-gray-500"> Contagem para o evento: </p>
+        <p className="text-2xl font-bold mt-6 text-center text-(--rosa)"> {contagemRegressiva}</p>
         </div>
       </div>
     </div>

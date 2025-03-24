@@ -1,7 +1,5 @@
-// app/editar-noticia/[id]/page.tsx
-
-'use client'; // Coloque a diretiva 'use client' no topo do arquivo
-
+'use client';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -16,18 +14,27 @@ type Noticia = {
   imagem: string;
 };
 
-// Função para buscar a notícia diretamente no servidor
 async function fetchNoticia(id: number): Promise<Noticia | null> {
-  const res = await fetch(`http://localhost:3000/noticias.json`);
-  const noticias = await res.json();
-  return noticias.find((noticia: Noticia) => noticia.id === id) || null;
+  try {
+    const res = await fetch(`http://localhost:3000/api/noticias/${id}`, {
+      method: 'GET', 
+    });
+
+    if (!res.ok) {
+      throw new Error('Erro ao buscar a notícia, status: ' + res.status);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error('Erro ao buscar notícia:', error);
+    return null;
+  }
 }
 
-// Função para atualizar a notícia
 async function atualizarNoticia(id: number, dados: Partial<Noticia>) {
   try {
-    const res = await fetch(`http://localhost:3000/noticias/${id}.json`, {
-      method: 'PUT',
+    const res = await fetch(`http://localhost:3000/api/noticias/${id}`, {
+      method: 'PUT', 
       headers: {
         'Content-Type': 'application/json',
       },
@@ -45,23 +52,30 @@ async function atualizarNoticia(id: number, dados: Partial<Noticia>) {
   }
 }
 
-// Componente Client
-export default function EditarNoticia({ params }: { params: { id: string } }) {
-  const id = parseInt(params.id, 10); // Obtendo o ID a partir do parâmetro da URL
-
+export default function EditarNoticia() {
+  const { id } = useParams(); 
+  const idParsed = parseInt(id as string, 10); 
   const [noticia, setNoticia] = useState<Noticia | null>(null);
+  const router = useRouter();  // Aqui estamos criando o hook useRouter
 
   useEffect(() => {
-    // Função para buscar a notícia
     const fetchData = async () => {
-      const noticiaData = await fetchNoticia(id);
-      setNoticia(noticiaData);
+      const noticiaData = await fetchNoticia(idParsed);
+      if (noticiaData) {
+        setNoticia(noticiaData);
+      } else {
+        notFound(); 
+      }
     };
     fetchData();
-  }, [id]);
+  }, [idParsed]);
 
   if (!noticia) {
-    return <div>Carregando...</div>; // Exibe um carregando enquanto os dados são buscados
+    return <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+      <h1 className="text-2xl font-bold text-(--azul)">
+        Carregando...
+        </h1>
+      </div>; 
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -77,8 +91,9 @@ export default function EditarNoticia({ params }: { params: { id: string } }) {
     };
 
     try {
-      await atualizarNoticia(id, dadosAtualizados);
+      await atualizarNoticia(idParsed, dadosAtualizados);
       alert('Notícia atualizada com sucesso!');
+      router.push('/noticias');  // Redireciona para a página de notícias
     } catch (error) {
       alert('Não foi possível atualizar a notícia.');
     }
