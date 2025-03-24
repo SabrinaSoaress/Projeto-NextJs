@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+// Tipo para representar os dados de uma notícia
 type Noticia = {
   id: number;
   titulo: string;
@@ -14,6 +15,7 @@ type Noticia = {
   imagem: string;
 };
 
+// buscar uma notícia a partir de seu ID
 async function fetchNoticia(id: number): Promise<Noticia | null> {
   try {
     const res = await fetch(`http://localhost:3000/api/noticias/${id}`, {
@@ -24,6 +26,7 @@ async function fetchNoticia(id: number): Promise<Noticia | null> {
       throw new Error('Erro ao buscar a notícia, status: ' + res.status);
     }
 
+    // Retorna os dados da notícia em formato JSON
     return await res.json();
   } catch (error) {
     console.error('Erro ao buscar notícia:', error);
@@ -31,6 +34,7 @@ async function fetchNoticia(id: number): Promise<Noticia | null> {
   }
 }
 
+// atualizar os dados de uma notícia
 async function atualizarNoticia(id: number, dados: Partial<Noticia>) {
   try {
     const res = await fetch(`http://localhost:3000/api/noticias/${id}`, {
@@ -38,13 +42,14 @@ async function atualizarNoticia(id: number, dados: Partial<Noticia>) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(dados),
+      body: JSON.stringify(dados),  // Envia os dados atualizados no corpo da requisição
     });
 
     if (!res.ok) {
       throw new Error('Erro ao atualizar a notícia');
     }
 
+    // Retorna os dados atualizados da notícia em formato JSON
     return await res.json();
   } catch (error) {
     console.error(error);
@@ -52,24 +57,27 @@ async function atualizarNoticia(id: number, dados: Partial<Noticia>) {
   }
 }
 
+// Componente principal para edição da notícia
 export default function EditarNoticia() {
-  const { id } = useParams(); 
-  const idParsed = parseInt(id as string, 10); 
-  const [noticia, setNoticia] = useState<Noticia | null>(null);
+  const { id } = useParams();  // Pega o ID da notícia da URL
+  const idParsed = parseInt(id as string, 10);  // Converte o ID para número
+  const [noticia, setNoticia] = useState<Noticia | null>(null); // Estado para armazenar os dados da notícia
   const router = useRouter();  // Aqui estamos criando o hook useRouter
 
+  // Efeito colateral para buscar a notícia assim que atualizar
   useEffect(() => {
     const fetchData = async () => {
       const noticiaData = await fetchNoticia(idParsed);
       if (noticiaData) {
         setNoticia(noticiaData);
       } else {
-        notFound(); 
+        notFound(); // redireciona para a página de erro
       }
     };
     fetchData();
-  }, [idParsed]);
+  }, [idParsed]); // O efeito será executado novamente se o ID mudar
 
+  // Se os dados da notícia ainda não foram carregados, exibe uma mensagem de carregamento
   if (!noticia) {
     return <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
       <h1 className="text-2xl font-bold text-(--azul)">
@@ -78,6 +86,7 @@ export default function EditarNoticia() {
       </div>; 
   }
 
+  // Função que lida com o envio do formulário
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -91,6 +100,7 @@ export default function EditarNoticia() {
     };
 
     try {
+      // Chama a função para atualizar a notícia
       await atualizarNoticia(idParsed, dadosAtualizados);
       alert('Notícia atualizada com sucesso!');
       router.push('/noticias');  // Redireciona para a página de notícias

@@ -1,4 +1,4 @@
-// Exportação padrão (default export)
+
 const Footer = () => {
     return (
       <footer className="bg-(--roxo) text-white py-4 mt-8">
@@ -9,5 +9,5 @@ const Footer = () => {
     );
   };
   
-  export default Footer;  // Exportação padrão
+  export default Footer;  
   

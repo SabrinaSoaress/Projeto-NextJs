@@ -11,7 +11,7 @@ export function Header() {
                     <li className="flex items-center justify-center gap-6"> <Link href='/'> HOME </Link></li>
                     <li className="flex items-center justify-center gap-6"> <Link href='/noticias'> Notícias </Link></li>
                     <li className="flex items-center justify-center gap-6"> <Link href='/eventos'> Eventos </Link></li>
-                    <li className="flex items-center justify-center gap-6"> <Link href='/todoList'> Lista </Link></li>
+                    <li className="flex items-center justify-center gap-6"> <Link href='/todoList'> Sugestões </Link></li>
                     <li className="flex items-center justify-center gap-6"> <Link href='/contato'> Contato </Link></li>
                 </ul>
             </nav>

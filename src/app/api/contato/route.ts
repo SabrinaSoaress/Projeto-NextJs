@@ -13,9 +13,10 @@ const readContato = (): any[] => {
 // Função para escrever no arquivo de forma assíncrona
 const writeContato = (contato: any[]): void => {
   fs.writeFileSync(contatoFilePath, JSON.stringify(contato, null, 2));
+  console.log();
 };
 
-// Handle POST request
+// POST request
 export async function POST(req: Request) {
   try {
     const novoContato = await req.json(); // aqui usa 'novoContato', para ficar consistente

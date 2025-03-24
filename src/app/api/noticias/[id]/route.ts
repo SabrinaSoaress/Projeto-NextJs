@@ -69,7 +69,6 @@ export async function DELETE(req: Request) {
   }
 }
 
-
 // Função para lidar com o GET (busca a notícia pelo ID)
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   const id = parseInt(params.id);

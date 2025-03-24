@@ -9,8 +9,9 @@ export default function AddNoticia() {
     const [conteudo, setConteudo] = useState('');
     const [autor, setAutor] = useState('');
     const [imagem, setImagem] = useState('');
-    const router = useRouter();
-
+    const router = useRouter();   // Hook do Next.js para realizar navegação após o envio do formulário
+    
+ // Função para lidar com o envio do formulário
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -24,6 +25,7 @@ export default function AddNoticia() {
         };
 
         try {
+            // Fazendo uma requisição POST para a API para adicionar a nova notícia
             const res = await fetch('http://localhost:3000/api/noticias', {
                 method: 'POST',
                 headers: {

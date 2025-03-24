@@ -14,11 +14,13 @@ type Noticia = {
   imagem: string;
 };
 
+// Função assíncrona para buscar uma notícia específica pelo ID
 async function fetchNoticia(id: number): Promise<Noticia | undefined> {
   const res = await fetch(`http://localhost:3000/noticias.json`);
   const noticias = await res.json();
   return noticias.find((noticia: Noticia) => noticia.id === id);
 }
+
 
 function formatarDataHora(dataHora: string): string {
   const data = new Date(dataHora);
@@ -34,14 +36,16 @@ function formatarDataHora(dataHora: string): string {
   const horas = String(data.getHours()).padStart(2, '0');
   const minutos = String(data.getMinutes()).padStart(2, '0');
 
+  // Retorna a data e hora formatadas
   return `${dia} ${mes} ${ano}, ${horas}:${minutos}`;
 }
 
 export default function NoticiaDetalhada() {
+  // Declaração de estados para controlar o carregamento, erro e dados da notícia
   const [noticia, setNoticia] = useState<Noticia | null>(null);
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState<string | null>(null);
-  const [id, setId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);  // Estado de carregamento
+  const [error, setError] = useState<string | null>(null);  // Estado de erro
+  const [id, setId] = useState<number | null>(null); // Estado para armazenar o ID da notícia
 
  
   useEffect(() => {
@@ -54,10 +58,11 @@ export default function NoticiaDetalhada() {
 
   useEffect(() => {
     
-    if (!id) return;
+    if (!id) return; // Se o ID não estiver presente, não faz nada
 
     const fetchData = async () => {
       try {
+        // Chama a função para buscar os dados da notícia
         const noticiaData = await fetchNoticia(id);
         if (noticiaData) {
           setNoticia(noticiaData);
@@ -86,6 +91,7 @@ export default function NoticiaDetalhada() {
     return <p>{error}</p>;
   }
 
+  // Caso a notícia não seja encontrada
   if (!noticia) {
     return <p>Notícia não encontrada</p>;
   }

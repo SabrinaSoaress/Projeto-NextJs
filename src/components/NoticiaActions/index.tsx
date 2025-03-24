@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
+// Função assíncrona para deletar uma notícia
 async function deletarNoticia(id: number, router: any) {
   try {
     const response = await fetch(`/api/noticias/${id}`, {
@@ -16,7 +17,7 @@ async function deletarNoticia(id: number, router: any) {
       console.error(`Erro ao remover notícia: ${errorData.message}`);
     } else {
       alert('Notícia removida com sucesso');
-      // Redireciona para a página /noticias
+
       router.push('/noticias');
     }
   } catch (error) {
@@ -24,6 +25,7 @@ async function deletarNoticia(id: number, router: any) {
   }
 }
 
+// renderiza os botões de "Editar" e "Remover"
 export default function NoticiaActions({ id }: { id: number }) {
   const router = useRouter();
 

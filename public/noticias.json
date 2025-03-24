@@ -106,5 +106,14 @@
     "data_publicacao": "2025-03-20T16:45:00Z",
     "autor": "Vinícius Costa",
     "imagem": "/imagem.jpg"
+  },
+  {
+    "titulo": "teste",
+    "noticia": "reteste",
+    "conteudo": "teste",
+    "data_publicacao": "2025-03-24T22:03:57.231Z",
+    "autor": "teste",
+    "imagem": "test",
+    "id": 13
   }
 ]

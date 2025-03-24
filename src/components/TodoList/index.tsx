@@ -41,7 +41,7 @@ const TodoList = () => {
     if (!newTodo.trim()) return; // Não adiciona se o texto estiver vazio
 
     const newTodoItem: Todo = {
-      id: Date.now(), // Usando o timestamp para gerar um ID único
+      id: Date.now(), // gerar um ID único
       text: newTodo,
       completed: false,
     };

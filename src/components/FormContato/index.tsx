@@ -2,20 +2,22 @@
 import { useState } from 'react';
 
 const FormContato = () => {
+  // Declaração dos estados para armazenar os valores dos campos do formulário
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
   const [email, setEmail] = useState('');
   const [mensagem, setMensagem] = useState('');
 
+   // Função para lidar com o envio do formulário
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // não deixa recarregar a página
   
     const response = await fetch('/api/contato', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', // Envia os dados como JSON
       },
-      body: JSON.stringify({
+      body: JSON.stringify({ // Converte os dados em JSON para o corpo da requisição
         nome,
         telefone,
         email,
@@ -23,10 +25,9 @@ const FormContato = () => {
       }),
     });
   
-    const data = await response.json();
+    const data = await response.json(); // Converte a resposta em JSON
     if (response.ok) {
       console.log('Mensagem enviada com sucesso:', data);
-      // Aqui você pode adicionar algum feedback para o usuário
     } else {
       console.log('Erro ao enviar a mensagem:', data);
     }
